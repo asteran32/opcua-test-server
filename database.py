@@ -18,7 +18,7 @@ class DB:
         print("light SQL version :", sqlite3.version)
 
     def connect(self):
-        self.c = sqlite3.connect(config.DatabaseConfig.DB_PATH)
+        self.c = sqlite3.connect(config.DBConfig.DB_PATH)
         self.c.isolation_level = None
         self.cur = self.c.cursor()
     
@@ -28,7 +28,7 @@ class DB:
             print("Can not connect at database. Please check again")
             return 
         # if file is exist => modify
-        csvpath = config.DatabaseConfig.CSV_PATH + fname
+        csvpath = config.DBConfig.CSV_PATH + fname
         t = time.strftime('%Y-%m-%d %X', time.localtime(time.time()))
         self.cur.execute("SELECT * FROM fs300 WHERE name = ?", (fname, ))
 
