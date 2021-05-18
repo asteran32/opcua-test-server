@@ -2,12 +2,12 @@ import os
 import csv
 import time
 import config
-import database
+import db
 
 class data_sheet:
     def __init__(self):
         self.fname = ""
-        self.dir = config.DatabaseConfig.CSV_PATH
+        self.dir = "./data/"
         self.row = ""
         # make file
         self.check_dir()
@@ -38,7 +38,7 @@ class data_sheet:
             self.createCSV()
 
     def uploadCSV(self):
-        db = database.DB()
+        db = db.mongoDB()
         csv_path = os.path.join(self.dir, self.fname)
         if os.path.exists(csv_path):
             db.commit(self.fname)
