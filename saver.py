@@ -7,7 +7,7 @@ import db
 class data_sheet:
     def __init__(self):
         self.fname = ""
-        self.dir = "./data/"
+        self.dir = config.DBConfig.CSV_PATH
         self.row = ""
         # make file
         self.check_dir()
@@ -21,10 +21,11 @@ class data_sheet:
     # daily schedule
     def createCSV(self):
         # make new file
-        self.fname = time.strftime('%Y-%m-%d-%H-%M', time.localtime(time.time())) + ".csv"
-        f = open(os.path.join(self.dir, self.fname), 'w', encoding='utf-8')
-        f.close()
-        return
+        self.fname = time.strftime('%Y-%m-%d', time.localtime(time.time())) + ".csv"
+        # file check
+        if not os.path.exists(os.path.join(self.dir, self.fname)):
+            f = open(fpath, 'w', encoding='utf-8') # create 
+            f.close()
     
     # every minute schedule
     def wirteCSV(self):
@@ -38,14 +39,8 @@ class data_sheet:
             self.createCSV()
 
     def uploadCSV(self):
-        db = db.mongoDB()
+        mongo = db.mongoDB()
         csv_path = os.path.join(self.dir, self.fname)
         if os.path.exists(csv_path):
-            db.commit(self.fname)
+            mongo.commit(self.fname)
         return
-
-            
-
-            
-
-

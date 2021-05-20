@@ -5,35 +5,34 @@ from pymongo import MongoClient
 
 class mongoDB:
     def __init__(self):
-        self.add = "mongodb://localhost:27017/"
-        self.client = "None"
+        self.client = None
+        self.dir = config.DBConfig.CSV_PATH
+        self.connect()
 
     def connect(self):
         self.client = MongoClient("mongodb://localhost:27017/")
-        if self.client is None:
-            return
+        return
 
     def commit(self, fname):
-        self.connect()
+        if self.client is None:
+            return
         db = self.client['plc']
         collection = db['fs300']
 
+        timestamp = time.strftime('%Y-%m-%d %X', time.localtime(time.time()))
+        csv = self.dir + fname
         result = collection.find_one({"name":fname})
         if result :
-            data = collection.updateOne(
-                {"name":fname}, {"date": time.strftime('%Y-%m-%d %X', time.localtime(time.time()))}
+            data = collection.update_one(
+                {"name":fname}, {"$set":{"date": timestamp}}
             )
-
         else:
             data = collection.insert_one({
                 "name": fname,
-                "path": config.DatabaseConfig.CSV_PATH + fname,
-                "date": time.strftime('%Y-%m-%d %X', time.localtime(time.time()))
+                "path": csv,
+                "date": timestamp
             })
 
-        self.close()
-
-        def close(self):
-            self.client.close()
-
+        return
+        
 
