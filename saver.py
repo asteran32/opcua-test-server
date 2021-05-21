@@ -23,7 +23,8 @@ class data_sheet:
         # make new file
         self.fname = time.strftime('%Y-%m-%d', time.localtime(time.time())) + ".csv"
         # file check
-        if not os.path.exists(os.path.join(self.dir, self.fname)):
+        fpath = self.dir + self.fname
+        if not os.path.exists(fpath):
             f = open(fpath, 'w', encoding='utf-8') # create 
             f.close()
     
