@@ -1,19 +1,17 @@
 from pymodbus.client.sync import ModbusTcpClient
 # https://pymodbus.readthedocs.io/en/latest/source/library/pymodbus.client.html
 
-#const 
-PLC_IPADD = "192.168.10.11"
-
-class Slave(object):
+class Slave:
     def __init__(self):
         self.client = None
-        self.serverAddress = PLC_IPADD
+        self.serverAddress = " "
 
     # open connection
-    def connect(self):
+    def connect(self, add):
         c = ModbusTcpClient(self.serverAddress)
         if c :
             self.client = c
+            self.serverAddress = add
             return c
         return c
 
@@ -25,13 +23,13 @@ class Slave(object):
     def readRegister(self, dataAdd): 
         if self.client:
             try:
-                node = self.client.read_holding_registers(dataAdd, 1) 
+                node = self.client.read_holding_registers(1000, 1) 
                 data = node.registers[0]
                 return data
             except:
                 self.disconncet()
                 return
-        return None
+        return " "
 
     # get datas start at add from count
     def readRegisters(self, dataAdd, cnt): 
@@ -43,10 +41,9 @@ class Slave(object):
             except:
                 self.disconncet()
                 return
-        return None
+        return " "
 
     # close connection
     def disconncet(self):
         if self.client:
             self.client.close()
-            self.client = None
