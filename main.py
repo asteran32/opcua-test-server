@@ -30,6 +30,8 @@ if __name__ == "__main__":
     for node in nodes:
         i = node.get("register")
         globals()['node_{}'.format(i)] = device.add_variable(node.get("id"), node.get("name"), 0, ua.VariantType.Float).set_writable()
+
+
     # starting server Thread
     server.start()
 
@@ -46,26 +48,25 @@ if __name__ == "__main__":
 
         # Scheduling
         schedule.every().day.at("00:00").do(saver.createCSV)
-        schedule.every().minute.do(saver.wirteCSV)
+        schedule.every().second.do(saver.wirteCSV)
 
         while client:
             datas = []
-
-            datas.append(time.strftime('%Y%m%d %H:%M'))
+            datas.append(time.strftime('%Y%m%d %H:%M:%S'))
             for node in nodes:
                 num = node.get("register")
                 try:
-                    node = client.read_holding_registers(num, 1)
-                    data = node.registers[0] #error
+                    data = client.read_holding_registers(num, 1)
+                    val = data.registers[0] #error
                 except:
                     break
 
                 # globals()['node_{}'.format(i)].set_value(data)
-                datas.append(data)
+                datas.append(val)
 
             saver.row = datas
             schedule.run_pending()
-            time.sleep(5)
+            # time.sleep(5)
         
     finally:
         client.close()
