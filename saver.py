@@ -7,9 +7,10 @@ class data_sheet:
         self.fname = ""
         self.dir = "data/"
         self.row = ""
+        
         # make file
         self.check_dir()
-        self.createCSV()
+        self.create_file()
 
     # check directory
     def check_dir(self):
@@ -17,7 +18,7 @@ class data_sheet:
             os.mkdir(self.dir)
 
     # daily schedule
-    def createCSV(self):
+    def create_file(self):
         # make new file
         self.fname = time.strftime('%Y-%m-%d', time.localtime(time.time())) + ".csv"
         # file check
@@ -27,12 +28,13 @@ class data_sheet:
             f.close()
     
     # every minute schedule
-    def wirteCSV(self):
+    def wirte_data(self):
         csv_path = os.path.join(self.dir, self.fname)
         if os.path.exists(csv_path):
-            f = open(csv_path, 'a', encoding='utf-8', newline='')
-            w = csv.writer(f)
-            w.writerow(self.row)
-            f.close()
-        else:
-            self.createCSV()
+            try:
+                f = open(csv_path, 'a', encoding='utf-8', newline='')
+                w = csv.writer(f)
+                w.writerow(self.row)
+                f.close()
+            except:
+                print("error !! while writing data ..")
