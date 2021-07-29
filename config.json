@@ -1,5 +1,5 @@
 {
-    "endpoint" : "opc.tcp://192.168.0.75:4840/freeopc/server",
+    "endpoint" : "opc.tcp://192.168.1.233:4840/freeopc/server",
     "plc" : "192.168.1.2",
     "uri" : "fine project opc ua test server",
     "device" : {
@@ -7,69 +7,37 @@
         "name" : "fsc300"
     },
     "nodes" : [{
-        "id": "ns=2;i=1000",
-        "name": "bowl_1",
-        "register": 1000
+        "id": "ns=2;i=1006",
+        "name": "bowl_A",
+        "register": 1006
     },{
-        "id": "ns=2;i=1010",
-        "name": "bowl_2",
-        "register": 1010
+        "id": "ns=2;i=1016",
+        "name": "bowl_Hz",
+        "register": 1016
     },{
-        "id": "ns=2;i=1020",
-        "name": "bowl_3",
-        "register": 1020
+        "id": "ns=2;i=1026",
+        "name": "bowl_RPM",
+        "register": 1026
     },{
-        "id": "ns=2;i=1100",
-        "name": "screw_1",
-        "register": 1100
+        "id": "ns=2;i=1106",
+        "name": "screw_A",
+        "register": 1106
     },{
-        "id": "ns=2;i=1110",
-        "name": "screw_2",
-        "register": 1110
+        "id": "ns=2;i=1116",
+        "name": "screw_Hz",
+        "register": 1116
     },{
-        "id": "ns=2;i=1120",
-        "name": "screw_3",
-        "register": 1120
-    },{
-        "id": "ns=2;i=1200",
-        "name": "polymer_1",
-        "register": 1200
-    },{
-        "id": "ns=2;i=1210",
-        "name": "polymer_2",
-        "register": 1220
-    },{
-        "id": "ns=2;i=1300",
-        "name": "sludge_1",
-        "register": 1300
-    },{
-        "id": "ns=2;i=1310",
-        "name": "sludge_2",
-        "register": 1310
-    },{
-        "id": "ns=2;i=1320",
-        "name": "sludge_3",
-        "register": 1320
+        "id": "ns=2;i=1126",
+        "name": "screw_RPM",
+        "register": 1126
     },{
         "id": "ns=2;i=1400",
-        "name": "vibration_ana",
+        "name": "vib_Anal",
         "register": 1400
     },{
-        "id": "ns=2;i=1409",
-        "name": "vibration_dig",
-        "register": 1409
-    },{
-        "id": "ns=2;i=1500",
-        "name": "flow_1",
-        "register": 1500
-    },{
-        "id": "ns=2;i=1600",
-        "name": "bearing_temp_1",
-        "register": 1600
-    },{
-        "id": "ns=2;i=1700",
-        "name": "npm_1",
-        "register": 1700
+        "id": "ns=2;i=1406",
+        "name": "vib_Digi",
+        "register": 1406
     }]
 
 }

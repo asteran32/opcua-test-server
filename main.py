@@ -2,7 +2,7 @@ import time
 import json
 import saver
 import schedule
-from random import randint
+
 from opcua import ua, Server
 from pymodbus.client.sync import ModbusTcpClient
 
@@ -29,7 +29,6 @@ if __name__ == "__main__":
     nodes = config.get("nodes")
     for node in nodes:
         idx = node.get("register")
-        
         globals()['node'+str(idx)] = device.add_variable(node.get("id"), node.get("name"),  ua.Variant(0, ua.VariantType.Float))
         eval('node'+str(idx)).set_writable()
 
@@ -55,8 +54,13 @@ if __name__ == "__main__":
             for node in nodes:
                 try:
                     raw = client.read_holding_registers(node.get("register"), 1)
-                    data = raw.registers[0]
-                    # data = randint(1,1000) for test
+                    data = raw.registers[0] # int type
+                    # Set opc ua server value
+                    nodeName = node.get("name").split("_")[1]
+                    if nodeName == "A" or nodeName == "Hz":
+                        data = float(data) * 0.1
+                        data = round(data, 2)
+                    
                     idx = node.get("register")
                     eval('node'+str(idx)).set_value(data)
                 except:
