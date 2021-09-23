@@ -25,12 +25,15 @@ if __name__ == "__main__":
     obj = server.get_objects_node()
     device = obj.add_object(config.get("device").get("id"), config.get("device").get("name"))
     
-    # add node
+    # add nodes
+    tags = ["Time"]
     nodes = config.get("nodes")
     for node in nodes:
         idx = node.get("register")
         globals()['node'+str(idx)] = device.add_variable(node.get("id"), node.get("name"),  ua.Variant(0, ua.VariantType.Float))
         eval('node'+str(idx)).set_writable()
+
+        tags.append(node.get("name"))
 
     # start opc ua server
     server.start()
@@ -42,7 +45,7 @@ if __name__ == "__main__":
            server.stop()
 
         # Load saver 
-        saver = saver.data_sheet()
+        saver = saver.data_sheet(tags)
 
         # Scheduling
         schedule.every().day.at("00:00").do(saver.create_file)
@@ -55,6 +58,7 @@ if __name__ == "__main__":
                 try:
                     raw = client.read_holding_registers(node.get("register"), 1)
                     data = raw.registers[0] # int type
+
                     # Set opc ua server value
                     nodeName = node.get("name").split("_")[1]
                     if nodeName == "A" or nodeName == "Hz":
@@ -70,7 +74,6 @@ if __name__ == "__main__":
 
             saver.row = datas
             schedule.run_pending()
-            # time.sleep(2)
         
     finally:
         client.close()

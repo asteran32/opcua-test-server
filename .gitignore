@@ -1,2 +1,4 @@
 # ignore all files in the build/ directory
 __pycache__/
+data/
+*.json
